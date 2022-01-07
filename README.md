@@ -16,13 +16,16 @@ graph with molecular attributes will be generated using the SMILEs notation and 
 cheminformatics package RDKit.
 
 List of ML-OPS tools to be incorporated throughout the execution of the project are:
-* Code version control
-* Data Version control
-* Good practices for organizing an ML project
-* Insure reproducibility
-* Logging in order to perform virtual experimentation such hyper-parameter optimization
-* (Hopefully) Distributed training
-* (Definitely) Deployment of the model so the public can use it
+* Structuring of Project using cookiecutter
+* Code version control (git)
+* Data Version control (dvc)
+* Package management using conda virtual environments
+* Ensure reproducibility using MLFlow or Comet.ml, including logging, model registry and tracking
+* (Optional) Perform virtual experimentation such as hyper-parameter optimization using sweeps (Weights&Biases)
+* Comply with Pep8 standards, fix code using black or yapf
+* Create small unit tests for data pre-processing and training
+* (Optional) Distributed training
+* Deployment and monitoring of the model
 
 
 
