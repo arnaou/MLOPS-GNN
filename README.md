@@ -3,55 +3,45 @@ MLOPS-GNN
 
 repository for ML-OPS project
 
-Project Organization
+Project Description
 ------------
+The overall aim of the project is to apply various ML-OPS tools to facilitate
+the further development and maintenance of a deep-learning model.
 
-    ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+The model of interest is a Graph Neural Network developed in the Pytorch-Geometric
+framework. The choice of model is tentative but various implementations already exists.
+The model is trained on two independent dataset to predict molecular properties such as the
+Aqueous solubility (ESOL) and the melting point of organic compounds. As input to the models a 
+graph with molecular attributes will be generated using the SMILEs notation and an open-source
+cheminformatics package RDKit.
+
+List of ML-OPS tools to be incorporated throughout the execution of the project are:
+* Code version control
+* Data Version control
+* Good practices for organizing an ML project
+* Insure reproducibility
+* Logging in order to perform virtual experimentation such hyper-parameter optimization
+* (Hopefully) Distributed training
+* (Definitely) Deployment of the model so the public can use it
 
 
---------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
