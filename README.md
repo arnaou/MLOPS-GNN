@@ -27,6 +27,10 @@ List of ML-OPS tools to be incorporated throughout the execution of the project 
 * (Optional) Distributed training
 * Deployment and monitoring of the model
 
+The model selected is : *Hierarchical Inter-Message Passing for Learning on Molecular Graphs*
+* [Paper](https://arxiv.org/abs/2006.12179) 
+* [GitHub](https://github.innominds.com/rusty1s/himp-gnn)
+
 
 
 
