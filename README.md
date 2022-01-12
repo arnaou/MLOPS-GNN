@@ -30,6 +30,7 @@ List of ML-OPS tools to be incorporated throughout the execution of the project 
 The model selected is : *Hierarchical Inter-Message Passing for Learning on Molecular Graphs*
 * [Paper](https://arxiv.org/abs/2006.12179) 
 * [GitHub](https://github.innominds.com/rusty1s/himp-gnn)
+* [PyG](https://pytorch-geometric.readthedocs.io/en/latest/index.html)
 
 
 
