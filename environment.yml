@@ -3,12 +3,12 @@ channels:
   - default
   - conda-forge
   - pytorch
-  - esri 
+  - pyg 
 dependencies:
   - pip=21.2.4
   - python=3.8.0
   - pytorch=1.10.1
-  - torch_geometric=2.0.3
+  - pyg=2.0.3
   - rdkit=2020.09.5
   - pip:
     - pytest==6.2.5
