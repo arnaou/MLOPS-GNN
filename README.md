@@ -28,8 +28,8 @@ List of ML-OPS tools to be incorporated throughout the execution of the project 
 * Deployment and monitoring of the model
 
 The model selected is : *Hierarchical Inter-Message Passing for Learning on Molecular Graphs*
-* [Paper](https://arxiv.org/abs/2006.12179) 
-* [GitHub](https://github.innominds.com/rusty1s/himp-gnn)
+* [Paper](https://pubs.acs.org/doi/10.1021/acs.jmedchem.9b00959) 
+* [GitHub](https://github.com/pyg-team/pytorch_geometric/blob/master/examples/attentive_fp.py)
 * [PyG](https://pytorch-geometric.readthedocs.io/en/latest/index.html)
 
 Set up conda env: conda env create -f environment.yml
