@@ -6,35 +6,17 @@ from dotenv import find_dotenv, load_dotenv
 import torch
 from torch_geometric.data import InMemoryDataset, Data
 from typing import Callable, Optional, Tuple, Union, List
-#from src.features.build_features import GetFeatures
+import os
+import sys
 
 
 # @click.command()
-# @click.argument('property_tag', type=click.Path())
 
-x_map = {
-    'atomic_num'           : list(range(0, 119)),
-    'chirality'            : ['CHI_UNSPECIFIED', 'CHI_TETRAHEDRAL_CW', 'CHI_TETRAHEDRAL_CCW', 'CHI_OTHER'],
-    'degree'               :  list(range(0, 11)),
-    'formal_charge'        :  list(range(-5, 7)),
-    'num_hs'               : list(range(0, 9)),
-    'num_radical_electrons': list(range(0, 5)),
-    'hybridization'        : ['UNSPECIFIED', 'S', 'SP', 'SP2', 'SP3', 'SP3D', 'SP3D2', 'OTHER'],
-    'is_aromatic'          : [False, True],
-    'is_in_ring'           : [False, True],
-}
-
-e_map = {
-    'bond_type': ['misc', 'SINGLE', 'DOUBLE', 'TRIPLE', 'AROMATIC'],
-    'stereo': ['STEREONONE', 'STEREOZ', 'STEREOE', 'STEREOCIS', 'STEREOTRANS', 'STEREOANY'],
-    'is_conjugated': [False, True],
-}
 
 class PurePropData(InMemoryDataset):
     r"""
     Highly inspired by the examples in 
     <https://pytorch-geometric.readthedocs.io/en/latest/_modules/torch_geometric/datasets/molecule_net.html#MoleculeNet>
-
     Args:
         root (string): Root directory where the data should be saved
         name (string) : the name of dataset (:obj: `"ESOL"´,
@@ -107,6 +89,17 @@ class PurePropData(InMemoryDataset):
                 if mol is None:
                     print('Invalid molecule (None)')
                     continue
+                x_map = {
+                    'atomic_num': list(range(0, 119)),
+                    'chirality': ['CHI_UNSPECIFIED', 'CHI_TETRAHEDRAL_CW', 'CHI_TETRAHEDRAL_CCW', 'CHI_OTHER'],
+                    'degree': list(range(0, 11)),
+                    'formal_charge': list(range(-5, 7)),
+                    'num_hs': list(range(0, 9)),
+                    'num_radical_electrons': list(range(0, 5)),
+                    'hybridization': ['UNSPECIFIED', 'S', 'SP', 'SP2', 'SP3', 'SP3D', 'SP3D2', 'OTHER'],
+                    'is_aromatic': [False, True],
+                    'is_in_ring': [False, True],
+                }
 
                 xs = []
                 for atom in mol.GetAtoms():
@@ -125,6 +118,14 @@ class PurePropData(InMemoryDataset):
                     xs.append(x)
 
                 x = torch.tensor(xs, dtype=torch.long).view(-1, 9)
+
+
+
+                e_map = {
+                    'bond_type': ['misc', 'SINGLE', 'DOUBLE', 'TRIPLE', 'AROMATIC'],
+                    'stereo': ['STEREONONE', 'STEREOZ', 'STEREOE', 'STEREOCIS', 'STEREOTRANS', 'STEREOANY'],
+                    'is_conjugated': [False, True],
+                }
 
                 edge_indices, edge_attrs = [], []
                 for bond in mol.GetBonds():
@@ -165,29 +166,43 @@ class PurePropData(InMemoryDataset):
                 return f'{self.names[self.name][0]}({len(self)})'
 
 
+@click.command()
+@click.argument('property_name', type=click.Path())
+@click.argument('feature_generator')
 
-# def main(property_tag):
-#     """ Runs data processing scripts to turn raw data from (../raw/property_tag) into
-#         cleaned data ready to be analyzed (saved in ../processed/property_tag).
-#     """
-#     logger = logging.getLogger(__name__)
-#     logger.info('making final data set from raw data')
-#
-#
-# if __name__ == '__main__':
-#     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-#     logging.basicConfig(level=logging.INFO, format=log_fmt)
-#
-#     # not used in this stub but often useful for finding various files
-#     project_dir = Path(__file__).resolve().parents[2]
-#
-#     # find .env automagically by walking up directories until it's found, then
-#     # load up the .env entries as environment variables
-#     load_dotenv(find_dotenv())
-#
-#     main()
-#%%
-import os
-path = r'C:\\Users\\arnaou\\OneDrive - Danmarks Tekniske Universitet\\05 Codings\\MLOPS-GNN\\data'
-print(path)
-PurePropData(path, 'bdpg_nmp')
+
+
+
+def main(property_name, feature_generator):
+    """ Runs data processing scripts to turn raw data from (../raw/property_tag) into
+        cleaned data ready to be analyzed (saved in ../processed/property_tag).
+    """
+    logger = logging.getLogger(__name__)
+    logger.info('making final data set from raw data')
+    path = 'data'
+
+    if feature_generator == 'AFP':
+        from src.features.build_features import Gen_Afp_Features
+        feat_gen = Gen_Afp_Features()
+
+    PurePropData(path, property_name, pre_transform=feat_gen)
+
+
+if __name__ == '__main__':
+    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    logging.basicConfig(level=logging.INFO, format=log_fmt)
+
+    # not used in this stub but often useful for finding various files
+    project_dir = Path(__file__).resolve().parents[2]
+
+    # find .env automagically by walking up directories until it's found, then
+    # load up the .env entries as environment variables
+    load_dotenv(find_dotenv())
+
+    main()
+# %%
+# %%
+# import os
+# path = r'C:\\Users\\arnaou\\OneDrive - Danmarks Tekniske Universitet\\05 Codings\\MLOPS-GNN\\data'
+# print(path)
+# PurePropData(path, 'bdpg_nmp')
