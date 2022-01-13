@@ -9,13 +9,5 @@ setup(
     author='Adem R. N. Aouichaoui, Aswin Anil Varkey, Simon Goldhofer',
     license='BSD-3',
     author_email="arnaou@kt.dtu.dk",
-    install_requires=[
-        "Click",
-        "python-dotenv",
-        "rdkit",
-        "setuptools",
-        "torch",
-        "torch_geometric",
-    ],
     python_requires='>=3.8',
 )
