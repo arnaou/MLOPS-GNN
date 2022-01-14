@@ -9,5 +9,5 @@ setup(
     author='Adem R. N. Aouichaoui, Aswin Anil Varkey, Simon Goldhofer',
     license='BSD-3',
     author_email="arnaou@kt.dtu.dk",
-    python_requires='>=3.8',
+    python_requires='>=3.7',
 )

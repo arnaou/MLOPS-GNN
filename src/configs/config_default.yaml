@@ -1,0 +1,25 @@
+#config.yaml
+epochs:
+  desc: Number of epochs to train over
+  value: 5
+batch_size:
+  desc: Size of each mini-batch
+  value: 32
+learning_rate:
+  desc: Training learning rate
+  value: 0.001
+optimizer:
+  desc: Type of optimizer
+  value: 'SGD'
+trainpath:
+  desc: Path of training set
+  value: "data/esol/processed/train_loader.pth"
+testpath:
+  desc: Path of test set
+  value: "data/esol/processed/test_loader.pth"
+valpath:
+  desc: Path of validation set
+  value: "data/esol/processed/val_loader.pth"
+checkpoint:
+  desc: Path to save model checkpoint
+  value: "models/checkpoint.pth"       
