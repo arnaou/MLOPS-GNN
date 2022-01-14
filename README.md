@@ -32,11 +32,28 @@ The model selected is : *Hierarchical Inter-Message Passing for Learning on Mole
 * [GitHub](https://github.com/pyg-team/pytorch_geometric/blob/master/examples/attentive_fp.py)
 * [PyG](https://pytorch-geometric.readthedocs.io/en/latest/index.html)
 
-Set up conda env: conda env create -f environment.yml
-Activate conda env: conda activate GNN-Mol
 
+To Setup Conda Environment:
 
+Update Conda: `conda update --yes conda`
 
+Set up conda env: `conda create -n GNN-Mol python=3.8 --yes`
+
+Activate conda env: `conda activate GNN-MOL`
+
+Install conda packages:
+
+`conda install -c pytorch pytorch=1.10.1`
+
+`conda install pyg=2.0.3 -c pyg -c conda-forge --yes`
+
+`conda install -c conda-forge rdkit=2020.09.1.0 --yes`
+
+Install pip packages:
+
+`pip install -r requirements.txt`
+
+`pip install -r requirements_test.txt`
 
 
 
