@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import argparse
 import logging
 import os
 from pathlib import Path
@@ -8,13 +7,16 @@ import torch
 from dotenv import find_dotenv, load_dotenv
 from torch_geometric.datasets import MoleculeNet
 from torch_geometric.loader import DataLoader
+import pdb
+import argparse
 
-parser = argparse.ArgumentParser(description="data loading and pre-processing")
-parser.add_argument('--property_name', type=str, default='esol')
-parser.add_argument("--feature_generator", type=str, default="AFP")
-parser.add_argument("--batch_size", type=int, default=64)
-parser.add_argument("--split_frac", nargs="+", type=int, default=[70, 15])
-parser.add_argument("--split_seed", type=int, default=42)
+parser = argparse.ArgumentParser(description='data loading and pre-processing')
+parser.add_argument('--property_name', type=str, default="esol")
+parser.add_argument('--feature_generator', type=str, default='AFP')
+parser.add_argument('--batch_size', type=int, default=64)
+parser.add_argument('--split_frac', nargs="+", type=int, default=[70, 15])
+parser.add_argument('--split_seed', type=int, default=42)
+
 args = parser.parse_args()
 property_name = args.property_name
 feature_generator = args.feature_generator
@@ -22,10 +24,6 @@ batch_size = args.batch_size
 split_frac = args.split_frac
 split_seed = args.split_seed
 
-
-# python src\data\make_dataset.py --property_name esol /
-# --feature_generator afp --batch_size 64 --split_frac 70 15 --split_seed 42
-# pdb.set_trace()
 
 
 def data_loading(property_name, feature_generator):
