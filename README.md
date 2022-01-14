@@ -43,11 +43,11 @@ Activate conda env: `conda activate GNN-MOL`
 
 Install conda packages:
 
-`conda install pyg=2.0.3 -c pyg -c conda-forge --yes`
-
 `conda install -c pytorch pytorch=1.10.1`
 
-`conda install -c conda-forge rdkit `
+`conda install pyg=2.0.3 -c pyg -c conda-forge --yes`
+
+`conda install -c conda-forge rdkit=2020.09.1.0`
 
 Install pip packages:
 
