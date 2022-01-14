@@ -51,27 +51,6 @@ def train_loop():
         on_trace_ready=tensorboard_trace_handler('./log/train/')
         ) as prof:
         with record_function("model_inference"):
-            parser = argparse.ArgumentParser(description='Train Model')
-            parser.add_argument('--config', default = 'config_default.yaml')
-            
-            args = parser.parse_args() 
-
-            config_path = 'src/configs/' + str(args.config)
-            wandb.init(project = 'MLOPS-GNN', config = config_path)
-            config = wandb.config
-            wandb.watch(model)
-            
-            device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-            
-            epochs      = config.epochs
-            lr          = config.learning_rate
-            trainpath   = config.trainpath
-            valpath     = config.valpath
-            checkpoint  = config.checkpoint       
-
-            log.info("Training day and night")
-            train_loader    = torch.load(trainpath)
-            val_loader      = torch.load(valpath)
 
             for epoch in range(1, epochs+1):
                 train_rmse = train(train_loader)
@@ -82,9 +61,29 @@ def train_loop():
                 print(f'Epoch: {epoch:03d}, Train Loss: {train_rmse:.4f} Val Loss: {val_rmse:.4f} ')
                 prof.step()
 
-            torch.save(model.state_dict(),checkpoint)                        
-            wandb.finish()
+            torch.save(model.state_dict(),checkpoint) 
 
 if __name__ == "__main__":   
-            train_loop()
-            exit
+
+    parser = argparse.ArgumentParser(description='Train Model')
+    parser.add_argument('--config', default = 'config_default.yaml')
+    
+    args = parser.parse_args() 
+
+    config_path = 'src/configs/' + str(args.config)
+    wandb.init(project = 'MLOPS-GNN', config = config_path)
+    config = wandb.config
+    wandb.watch(model)
+    
+    epochs      = config.epochs
+    lr          = config.learning_rate
+    trainpath   = config.trainpath
+    valpath     = config.valpath
+    checkpoint  = config.checkpoint       
+
+    log.info("Training day and night")
+    train_loader    = torch.load(trainpath)
+    val_loader      = torch.load(valpath)
+    
+    train_loop()                       
+    wandb.finish()

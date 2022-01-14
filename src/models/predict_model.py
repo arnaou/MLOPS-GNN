@@ -32,22 +32,6 @@ def predict_loop():
         on_trace_ready=tensorboard_trace_handler('./log/predict/')
         ) as prof:
         with record_function("model_inference"):  
- 
-            parser = argparse.ArgumentParser(description='Test Model')
-            parser.add_argument('--config', default = 'config_default.yaml')
-            
-            args = parser.parse_args()
-            
-            config_path = 'src/configs/' + str(args.config)
-            wandb.init(project = 'MLOPS-GNN', config = config_path)
-            config = wandb.config
-            wandb.watch(model)
-            
-            device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-            
-            testpath    = config.testpath
-            checkpoint  = config.checkpoint  
-            test_loader = torch.load(testpath)
             
             model.load_state_dict(torch.load(checkpoint))     
             
@@ -62,7 +46,23 @@ def predict_loop():
                 with record_function("model_inference"):
                     model(data.x, data.edge_index, data.edge_attr, data.batch)
                             
-            wandb.finish()
+
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Test Model')
+    parser.add_argument('--config', default = 'config_default.yaml')
+    
+    args = parser.parse_args()
+    
+    config_path = 'src/configs/' + str(args.config)
+    wandb.init(project = 'MLOPS-GNN', config = config_path)
+    config = wandb.config
+    wandb.watch(model)
+        
+    testpath    = config.testpath
+    checkpoint  = config.checkpoint  
+    test_loader = torch.load(testpath)
+    
     predict_loop()
+    
+    wandb.finish()
