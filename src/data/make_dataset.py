@@ -10,7 +10,7 @@ from torch_geometric.datasets import MoleculeNet
 from torch_geometric.loader import DataLoader
 
 parser = argparse.ArgumentParser(description="data loading and pre-processing")
-parser.add_argument('--property_name', type=str, default="esol")
+parser.add_argument('--property_name', type=str, default='esol')
 parser.add_argument("--feature_generator", type=str, default="AFP")
 parser.add_argument("--batch_size", type=int, default=64)
 parser.add_argument("--split_frac", nargs="+", type=int, default=[70, 15])
@@ -23,6 +23,7 @@ split_frac = args.split_frac
 split_seed = args.split_seed
 
 
+# python src\data\make_dataset.py --property_name esol --feature_generator afp --batch_size 64 --split_frac 70 15 --split_seed 42
 # pdb.set_trace()
 
 
