@@ -32,8 +32,11 @@ The model selected is : *Hierarchical Inter-Message Passing for Learning on Mole
 * [GitHub](https://github.innominds.com/rusty1s/himp-gnn)
 * [PyG](https://pytorch-geometric.readthedocs.io/en/latest/index.html)
 
-Set up conda env: conda env create -f environment.yml
-Activate conda env: conda activate GNN-Mol
+Update Conda: `conda update --name base --channel defaults --yes conda`
+
+Set up conda env: `conda env create -f environment.yml`
+
+Activate conda env: `conda activate GNN-Mol`
 
 
 
