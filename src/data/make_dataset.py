@@ -23,7 +23,8 @@ split_frac = args.split_frac
 split_seed = args.split_seed
 
 
-# python src\data\make_dataset.py --property_name esol --feature_generator afp --batch_size 64 --split_frac 70 15 --split_seed 42
+# python src\data\make_dataset.py --property_name esol /
+# --feature_generator afp --batch_size 64 --split_frac 70 15 --split_seed 42
 # pdb.set_trace()
 
 
