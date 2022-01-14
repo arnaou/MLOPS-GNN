@@ -43,7 +43,7 @@ Activate conda env: `conda activate GNN-MOL`
 
 Install conda packages:
 
-`conda install -c pytorch pytorch=1.10.1`
+`conda install -c pytorch pytorch=1.10.1 cpuonly`
 
 `conda install pyg=2.0.3 -c pyg -c conda-forge --yes`
 
