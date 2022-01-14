@@ -1,0 +1,19 @@
+name: train-my-model cml
+on: [push]
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    container: docker://iterativeai/cml:0-dvc2-base1  # this contains the continues machine learning pipeline
+    steps:
+        - uses: actions/checkout@v2
+        - name: cml_run
+          env:
+              REPO_TOKEN: $
+          run: |
+              pip install -r requirements.txt  # install dependencies
+              python src/models/train_model.py  # run training
+
+              # send all information to report.md that will be reported to us when the workflow finish
+              cat classification_report.txt >> report.md
+              cml-publish confusion_matrix.png --md >> report.md
+              cml-send-comment report.md
