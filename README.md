@@ -34,15 +34,25 @@ The model selected is : *Hierarchical Inter-Message Passing for Learning on Mole
 
 
 To Setup Conda Environment:
+
 Update Conda: `conda update --yes conda`
+
 Set up conda env: `conda create -n GNN-Mol python=3.8 --yes`
+
 Activate conda env: `conda activate GNN-MOL`
+
 Install conda packages:
+
 `conda install pyg=2.0.3 -c pyg -c conda-forge --yes`
+
 `conda install -c pytorch pytorch=1.10.1`
+
 `conda install -c conda-forge rdkit `
+
 Install pip packages:
+
 `pip install -r requirements.txt`
+
 `pip install -r requirements_test.txt`
 
 
