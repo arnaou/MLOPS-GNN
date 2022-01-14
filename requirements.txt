@@ -1,5 +1,5 @@
--e .
-
+python-dotenv==0.19.2
+rdkit==2009.Q1-1
 Click==7.0
 python-dotenv==0.19.2
 rdkit==2020.09.5
