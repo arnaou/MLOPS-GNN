@@ -10,7 +10,7 @@ def test_data():
     # looping over all data splits
     for i in list_loaders:
         # define path
-        path = os.path.join("data", "processed", i)
+        path = os.path.join("data", "esol", "processed", i)
         # loading the data
         data = torch.load(path)
         # test that the dataset is not empty
