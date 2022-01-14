@@ -1,4 +1,4 @@
-name: train-my-model cml
+name: Continuous Machine Learning
 on: [push]
 jobs:
   run:

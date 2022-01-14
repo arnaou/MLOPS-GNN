@@ -6,6 +6,7 @@ from src.models.model import GNNModel
 import torch.nn.functional as F
 import wandb
 from math import sqrt
+from torch.profiler import profile, record_function, ProfilerActivity, tensorboard_trace_handler
 
 log = logging.getLogger(__name__)
 model = GNNModel.model
@@ -39,48 +40,51 @@ def test(test_loader):
 
 
 def train_loop():    
- 
-    parser = argparse.ArgumentParser(description='Train Model')
-    parser.add_argument('--config', default = 'config_default.yaml')
-    
-    args = parser.parse_args()
-    
-    config_path = 'src/configs/' + str(args.config)
-    wandb.init(project = 'MLOPS-GNN', config = config_path)
-    config = wandb.config
-    wandb.watch(model)
-    
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    
-    epochs      = config.epochs
-    lr          = config.learning_rate
-    trainpath   = config.trainpath
-    valpath     = config.valpath
-    checkpoint  = config.checkpoint       
 
-    log.info("Training day and night")
-    train_loader    = torch.load(trainpath)
-    val_loader      = torch.load(valpath)
+    with profile(schedule=torch.profiler.schedule(
+        wait=5, # during this phase profiler is not active
+        warmup=2, # during this phase profiler starts tracing, but the results are discarded
+        active=6, # during this phase profiler traces and records data
+        repeat=2),
+        activities=[ProfilerActivity.CPU], 
+        record_shapes=True, 
+        on_trace_ready=tensorboard_trace_handler('./log/train/')
+        ) as prof:
+        with record_function("model_inference"):
+            parser = argparse.ArgumentParser(description='Train Model')
+            parser.add_argument('--config', default = 'config_default.yaml')
+            
+            args = parser.parse_args() 
 
-    # Implement training loop here
+            config_path = 'src/configs/' + str(args.config)
+            wandb.init(project = 'MLOPS-GNN', config = config_path)
+            config = wandb.config
+            wandb.watch(model)
+            
+            device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+            
+            epochs      = config.epochs
+            lr          = config.learning_rate
+            trainpath   = config.trainpath
+            valpath     = config.valpath
+            checkpoint  = config.checkpoint       
 
+            log.info("Training day and night")
+            train_loader    = torch.load(trainpath)
+            val_loader      = torch.load(valpath)
 
-    for epoch in range(1, epochs+1):
-        train_rmse = train(train_loader)
-        val_rmse = test(val_loader)
-        
-        wandb.log({"train_rmse": train_rmse})
-        wandb.log({"val_rmse": val_rmse})
-        print(f'Epoch: {epoch:03d}, Train Loss: {train_rmse:.4f} Val Loss: {val_rmse:.4f} ')
+            for epoch in range(1, epochs+1):
+                train_rmse = train(train_loader)
+                val_rmse = test(val_loader)
+                
+                wandb.log({"train_rmse": train_rmse})
+                wandb.log({"val_rmse": val_rmse})
+                print(f'Epoch: {epoch:03d}, Train Loss: {train_rmse:.4f} Val Loss: {val_rmse:.4f} ')
+                prof.step()
 
-    torch.save(model.state_dict(),checkpoint)
-    wandb.finish()
+            torch.save(model.state_dict(),checkpoint)                        
+            wandb.finish()
 
-if __name__ == "__main__":
-    train_loop()
-
-
-
-
-
-
+if __name__ == "__main__":   
+            train_loop()
+            exit
