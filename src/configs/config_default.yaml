@@ -13,13 +13,13 @@ optimizer:
   value: 'SGD'
 trainpath:
   desc: Path of training set
-  value: "data/esol/processed/train_loader.pth"
+  value: "data/esol/processed/train_loader.pt"
 testpath:
   desc: Path of test set
-  value: "data/esol/processed/test_loader.pth"
+  value: "data/esol/processed/test_loader.pt"
 valpath:
   desc: Path of validation set
-  value: "data/esol/processed/val_loader.pth"
+  value: "data/esol/processed/val_loader.pt"
 checkpoint:
   desc: Path to save model checkpoint
   value: "models/checkpoint.pth"       

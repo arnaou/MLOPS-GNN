@@ -1,10 +1,6 @@
 import torch
-from torch_geometric.loader import DataLoader
 import argparse
 import logging
-import sys
-import click
-import numpy as np
 from torch import nn, optim
 from src.models.model import GNNModel
 import torch.nn.functional as F
@@ -59,13 +55,11 @@ def train_loop():
     epochs      = config.epochs
     lr          = config.learning_rate
     trainpath   = config.trainpath
-    testpath    = config.testpath
     valpath     = config.valpath
     checkpoint  = config.checkpoint       
 
     log.info("Training day and night")
     train_loader    = torch.load(trainpath)
-    test_loader     = torch.load(testpath)
     val_loader      = torch.load(valpath)
 
     # Implement training loop here
@@ -74,13 +68,10 @@ def train_loop():
     for epoch in range(1, epochs+1):
         train_rmse = train(train_loader)
         val_rmse = test(val_loader)
-        test_rmse = test(test_loader)
         
         wandb.log({"train_rmse": train_rmse})
         wandb.log({"val_rmse": val_rmse})
-        wandb.log({"test_rmse": test_rmse})
-        print(f'Epoch: {epoch:03d}, Loss: {train_rmse:.4f} Val: {val_rmse:.4f} '
-              f'Test: {test_rmse:.4f}')
+        print(f'Epoch: {epoch:03d}, Train Loss: {train_rmse:.4f} Val Loss: {val_rmse:.4f} ')
 
     torch.save(model.state_dict(),checkpoint)
     wandb.finish()
