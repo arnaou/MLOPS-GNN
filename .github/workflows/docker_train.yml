@@ -1,0 +1,18 @@
+name: Create Docker Container
+
+on: [push]
+
+jobs:
+  mlops-container:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./week_6_github_actions
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: $
+      - name: Build container
+        run: |
+          docker build --tag inference:latest .
