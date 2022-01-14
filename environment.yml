@@ -1,0 +1,21 @@
+name: GNN-Mol
+channels:
+  - default
+  - conda-forge
+  - pytorch
+  - pyg 
+dependencies:
+  - pip=21.2.4
+  - python=3.8.0
+  - pytorch=1.10.1
+  - pyg=2.0.3
+  - rdkit=2020.09.5
+  - pip:
+    - pytest==6.2.5
+    - isort==5.10.1
+    - flake8==4.0.1
+    - mypy==0.931
+    - setuptools==45.2.0
+    - Click==7.0
+    - python-dotenv==0.19.2
+    - dvc==2.9.3
