@@ -47,7 +47,7 @@ Install conda packages:
 
 `conda install pyg=2.0.3 -c pyg -c conda-forge --yes`
 
-`conda install -c conda-forge rdkit=2020.09.1.0`
+`conda install -c conda-forge rdkit=2020.09.1.0 --yes`
 
 Install pip packages:
 
