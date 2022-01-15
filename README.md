@@ -33,7 +33,7 @@ The model selected is : *Hierarchical Inter-Message Passing for Learning on Mole
 * [PyG](https://pytorch-geometric.readthedocs.io/en/latest/index.html)
 
 
-To Setup Conda Environment:
+# Setup Conda Environment:
 
 Update Conda: `conda update --yes conda`
 
@@ -55,7 +55,17 @@ Install pip packages:
 
 `pip install -r requirements_test.txt`
 
+# Docker
 
+Create docker: `docker build -t gnn:latest .`
+
+Run Docker from entrypoint: `docker run gnn`
+
+Run Docker with shell as entrypoint: `docker run -it --entrypoint sh gnn`
+
+Upload to Dockerhub: `docker container commit CONTAINER-ID gnn-mol-latest` (Get CONTAINER-ID with `docker ps -a`), then use docker extension to push.
+
+To Pull: `docker pull 123456789523544/gnn-mol-latest`
 
 
 
