@@ -22,4 +22,26 @@ valpath:
   value: "data/esol/processed/val_loader.pt"
 checkpoint:
   desc: Path to save model checkpoint
-  value: "models/checkpoint.pth"       
+  value: "models/checkpoint.pth"
+in_channel:
+  desc: "Size of each input sample"
+  value: 39
+hidden_channels:
+  desc: "Hidden node feature dimensionality"
+  value: 27
+out_channels:
+  desc: "Size of each output sample"
+  value: 1
+edge_dim:
+  desc: "Edge feature dimensionality"
+  value: 10
+num_layers:
+  desc: "Number of GNN layers."
+  value: 6
+num_timesteps:
+  desc: "Number of iterative refinement steps for global readout"
+  value: 2
+dropout:
+  desc: "Dropout probability"
+  value: 0.1
+
