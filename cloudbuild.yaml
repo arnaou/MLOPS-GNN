@@ -6,10 +6,10 @@ steps:
       - echo "Secret is '$$SECRET_KEY'"
   secretEnv: ['SECRET_KEY']
 - name: 'gcr.io/cloud-builders/docker'
-  args: 
-      - 'build',
-      - '--SECRET_KEY=$$SECRET_KEY',
-      - '-tag=gcr.io/dtu-mlops-338110/testing', 
+  args:
+      - 'build'
+      - '--SECRET_KEY=$$SECRET_KEY'
+      - '-tag=gcr.io/dtu-mlops-338110/testing'
       - '.'
   secretEnv: ['SECRET_KEY']
 - name: 'gcr.io/cloud-builders/docker'
