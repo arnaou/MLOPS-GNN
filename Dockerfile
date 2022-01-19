@@ -2,11 +2,11 @@ FROM continuumio/miniconda3
 
 ARG SECRET_KEY
 RUN echo SECRET_KEY
-ENV SECRET_KEY $SECRET_KEY
 RUN echo "$SECRET_KEY\n$SECRET_KEY"
 RUN echo "$SECRET_KEY\n$SECRET_KEY" > file.txt
 RUN echo SECRET_KEY > file1.txt
-RUN echo $SECRET_KEY > file1.txt
+RUN echo $SECRET_KEY > file2.txt
+ENV SECRET_KEY $SECRET_KEY
 
 #RUN apt update && \
 #apt install --no-install-recommends -y build-essential gcc && \
