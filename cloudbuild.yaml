@@ -8,9 +8,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['echo', '${_SUB_VALUE}']
 substitutions:
-    _SUB_VALUE: unused
-options:
-    substitution_option: 'ALLOW_LOOSE'
+    _SUB_VALUE: v6.9.1
 # - name: 'gcr.io/cloud-builders/docker'
 #   entrypoint: 'bash'
 #   args: 
