@@ -9,10 +9,11 @@ steps:
   entrypoint: 'bash'
   args: 
       - -c
-      - echo "Secret is ${_KEY}"
-  secretEnv: ['SECRET_KEY']
-substitutions: 
-  _KEY: abcd
+      - echo "Secret is $$SECRET_KEY"
+substitutions:
+    _IMAGE_NAME: '${PROJECT_ID}'
+options:
+    dynamic_substitutions: true
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
   args: 
