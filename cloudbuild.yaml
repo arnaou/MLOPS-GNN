@@ -7,11 +7,11 @@ steps:
   secretEnv: ['SECRET_KEY']
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
-  args: 
-      - -c
-      - echo "Secret is ${_IMAGE_NAME}"
+  args: ['echo', ${_SUB_VALUE}]
 substitutions:
-    _IMAGE_NAME: v6.9.1
+    _SUB_VALUE: unused
+options:
+    substitution_option: 'ALLOW_LOOSE'
 # - name: 'gcr.io/cloud-builders/docker'
 #   entrypoint: 'bash'
 #   args: 
