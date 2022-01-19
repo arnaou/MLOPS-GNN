@@ -9,7 +9,7 @@ steps:
   args: 
   - build
   - --build-arg
-  - SECRET_KEY=${SECRET_KEY}
+  - SECRET_KEY='$$SECRET_KEY'
   - -t=gcr.io/$PROJECT_ID/docker:19.03.9
   - --file=Dockerfile-19.03.9
   - .
