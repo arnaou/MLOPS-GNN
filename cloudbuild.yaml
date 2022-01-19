@@ -10,19 +10,22 @@ steps:
   args: 
       - -c
       - echo "Secret is ${_KEY}"
-  substitutions: _KEY: abcd
+substitutions: 
+  _KEY: abcd
   secretEnv: ['SECRET_KEY']
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
   args: 
       - -c
       - echo "Secret is ${_KEY}"
-  substitutions: _KEY: $$SECRET_KEY
+substitutions: 
+  _KEY: $$SECRET_KEY
 options:
     dynamic_substitutions: true
   secretEnv: ['SECRET_KEY']ker'
   args: ["build", "-t", "gcr.io/dtu-mlops-338110/testing","--build-arg", "SECRET_KEY=${_KEY}", "."]
-  substitutions: _KEY: $$SECRET_KEY
+substitutions: 
+  _KEY: $$SECRET_KEY
 options:
     dynamic_substitutions: true
   secretEnv: ['SECRET_KEY']
