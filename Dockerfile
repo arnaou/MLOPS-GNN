@@ -6,15 +6,10 @@ apt clean \
 wget \
 && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir /root/gnn-mol
 COPY requirements.txt requirements.txt
 COPY requirements_test.txt requirements_test.txt
 COPY setup.py setup.py
-COPY src/ src/
-COPY models/ models/
-COPY reports/ reports/
-COPY data/ data/
-COPY tests/ tests/
-COPY entrypoint.sh entrypoint.sh
 
 RUN conda init
 RUN conda install pytorch=1.10.1 cpuonly -c pytorch
@@ -44,6 +39,15 @@ ENV PATH $PATH:/root/tools/google-cloud-sdk/bin -
 # Make sure gsutil will use the default service account
 RUN echo '[GoogleCompute]\nservice_account = default' > /etc/boto.cfg
 #Entrypoint
-WORKDIR /
+
+COPY src/ root/gnn-mol/src/
+COPY models/ root/gnn-mol/models/
+COPY reports/ root/gnn-mol/reports/
+COPY data/ root/gnn-mol/data/
+COPY tests/ root/gnn-mol/tests/
+COPY entrypoint.sh root/gnn-mol/entrypoint.sh
+
+
+WORKDIR /root/gnn-mol/
 #ENTRYPOINT ["python", "-u","src/data/make_dataset.py"]
 ENTRYPOINT ["sh", "entrypoint.sh"]
