@@ -1,4 +1,4 @@
 [core]
-    remote = remote_storage
-['remote "remote_storage"']
+    remote = gnn_cloud
+['remote "gnn_cloud"']
     url = gs://dtu-mlops-gnn/
