@@ -11,32 +11,24 @@ steps:
       - -c
       - echo "Secret is $$SECRET_KEY"
 substitutions:
-    _IMAGE_NAME: '${PROJECT_ID}'
-options:
-    dynamic_substitutions: true
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  args: 
-      - -c
-      - echo "Secret is ${_KEY}"
-  secretEnv: ['SECRET_KEY']ker'
-substitutions: 
-  _KEY: $$SECRET_KEY
-options:
-    dynamic_substitutions: true
-- name: 'gcr.io/cloud-builders/docker'
-  args: ["build", "-t", "gcr.io/dtu-mlops-338110/testing","--build-arg", "SECRET_KEY=${_KEY}", "."]
-  secretEnv: ['SECRET_KEY']
-substitutions: 
-  _KEY: $$SECRET_KEY
-options:
-    dynamic_substitutions: true
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  args: 
-      - -c
-      - echo "Secret is again $$SECRET_KEY"
-  secretEnv: ['SECRET_KEY']
+    _IMAGE_NAME: v6.9.1
+# - name: 'gcr.io/cloud-builders/docker'
+#   entrypoint: 'bash'
+#   args: 
+#       - -c
+#       - echo "Secret is ${_KEY}"
+#   secretEnv: ['SECRET_KEY']ker'
+# substitutions: 
+#   _KEY: $$SECRET_KEY
+# options:
+#     dynamic_substitutions: true
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ["build", "-t", "gcr.io/dtu-mlops-338110/testing","--build-arg", "SECRET_KEY=${_KEY}", "."]
+#   secretEnv: ['SECRET_KEY']
+# substitutions: 
+#   _KEY: $$SECRET_KEY
+# options:
+#     dynamic_substitutions: true
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/dtu-mlops-338110/testing']
 availableSecrets:
