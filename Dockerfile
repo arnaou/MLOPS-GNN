@@ -20,6 +20,11 @@ RUN conda install -c conda-forge rdkit=2020.09.1.0 --yes
 RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install -r requirements_test.txt --no-cache-dir
 RUN pip install python-dotenv[cli]
+RUN pip download torch==1.10.1
+RUN pip install torch*.whl 
+RUN pip install torchvision==0.11.2
+RUN pip install dvc[gs]
+RUN pip install wandb
 RUN wget -nv \
     https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz && \
     mkdir /root/tools && \
@@ -43,6 +48,9 @@ COPY models/ root/gnn-mol/models/
 COPY reports/ root/gnn-mol/reports/
 COPY tests/ root/gnn-mol/tests/
 COPY entrypoint.sh root/gnn-mol/entrypoint.sh
+COPY .dvc/ /root/project/.dvc/
+COPY data.dvc /root/project/data.dvc
+COPY .git/ /root/project/.git/
 WORKDIR /root/gnn-mol/
 #ENTRYPOINT ["python", "-u","src/data/make_dataset.py"]
 ENTRYPOINT ["sh", "entrypoint.sh"]
