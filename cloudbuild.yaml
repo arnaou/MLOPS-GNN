@@ -6,8 +6,7 @@ steps:
       - echo "Secret is $$SECRET_KEY"
   secretEnv: ['SECRET_KEY']
 - name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  args: ['echo', ${_SUB_VALUE}]
+  args: ['echo', '${_SUB_VALUE}']
 substitutions:
     _SUB_VALUE: unused
 options:
