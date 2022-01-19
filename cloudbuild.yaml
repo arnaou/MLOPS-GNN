@@ -10,8 +10,7 @@ steps:
   - build
   - --build-arg
   - SECRET_KEY='$$SECRET_KEY'
-  - -t=gcr.io/$PROJECT_ID/docker:19.03.9
-  - --file=Dockerfile-19.03.9
+  - -t=gcr.io/dtu-mlops-338110/testing
   - .
   secretEnv: ['SECRET_KEY']
 - name: 'gcr.io/cloud-builders/docker'
