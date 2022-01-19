@@ -7,10 +7,12 @@ steps:
   secretEnv: ['SECRET_KEY']
 - name: 'gcr.io/cloud-builders/docker'
   args: ["build", "-t", "gcr.io/dtu-mlops-338110/testing","--build-arg", "SECRET_KEY=$$SECRET_KEY", "."]
-availableSecrets:
-  secretManager:
-  - versionName: projects/310452010967/secrets/SECRET_KEY/versions/latest
-    env: 'SECRET_KEY'
+  secretEnv: 'SECRET_KEY'steps:
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: 
+      - -c
+      - echo "Secret is again $$SECRET_KEY"
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/dtu-mlops-338110/testing']
 availableSecrets:
