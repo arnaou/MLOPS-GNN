@@ -41,5 +41,6 @@ COPY entrypoint.sh root/gnn-mol/entrypoint.sh
 WORKDIR /root/gnn-mol/
 #ENTRYPOINT ["python", "-u","src/data/make_dataset.py"]
 ARG SECRET_KEY
+RUN echo SECRET_KEY
 ENV SECRET_KEY ${SECRET_KEY}
 ENTRYPOINT ["sh", "entrypoint.sh"]
