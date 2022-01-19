@@ -27,7 +27,7 @@ List of ML-OPS tools to be incorporated throughout the execution of the project 
 * (Optional) Distributed training
 * Deployment and monitoring of the model
 
-The model selected is : *Hierarchical Inter-Message Passing for Learning on Molecular Graphs*
+The model selected is : *Attentive fingerprint*
 * [Paper](https://pubs.acs.org/doi/10.1021/acs.jmedchem.9b00959) 
 * [GitHub](https://github.com/pyg-team/pytorch_geometric/blob/master/examples/attentive_fp.py)
 * [PyG](https://pytorch-geometric.readthedocs.io/en/latest/index.html)
@@ -68,7 +68,7 @@ Upload to Dockerhub: `docker container commit CONTAINER-ID gnn-mol-latest` (Get 
 To Pull: `docker pull 123456789523544/gnn-mol-latest`
 
 
-
+# Usage
 
 
 
