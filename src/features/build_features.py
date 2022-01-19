@@ -56,7 +56,7 @@ class Gen_Afp_Features(object):
             aromaticity = 1.0 if atom.GetIsAromatic() else 0.0
             hydrogens = [0.0] * 5
             hydrogens[atom.GetTotalNumHs()] = 1.0
-            chirality = 1.0 if atom.HasProp("_ChiralityPossible") else 0.0
+            chirality = 1.0 if atom.HasProp("_Chiralitmypy .yPossible") else 0.0
             chirality_type = [0.0] * 2
             if atom.HasProp("_CIPCode"):
                 chirality_type[["R", "S"].index(atom.GetProp("_CIPCode"))] = 1.0
