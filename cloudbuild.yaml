@@ -11,8 +11,6 @@ steps:
          'SECRET_KEY=$$SECRET_KEY',
          '--build-arg',
          'SECRET_KEY1=$SECRET_KEY',
-         '--build-arg',
-         'SECRET_KEY2=SECRET_KEY',
          '-t',
          'gcr.io/dtu-mlops-338110/testing', 
          '.']
