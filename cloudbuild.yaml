@@ -6,7 +6,7 @@ steps:
       - echo "Secret is $$SECRET_KEY"
   secretEnv: ['SECRET_KEY']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ["build", "-t", "gcr.io/dtu-mlops-338110/testing","--build-arg", "SECRET_KEY=abcd", "."]
+  args: ["build", "-t", "gcr.io/dtu-mlops-338110/testing","--build-arg", "SECRET_KEY=${SECRET_KEY}", "."]
   secretEnv: ['SECRET_KEY']
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
