@@ -3,16 +3,11 @@ steps:
   entrypoint: 'bash'
   args: 
       - -c
-      - echo "Secret is '$$SECRET_KEY'"
+      - echo "Secret is $$SECRET_KEY"
   secretEnv: ['SECRET_KEY']
   secretEnv: 'SECRET_KEY=$SECRET_KEY'
 - name: 'gcr.io/cloud-builders/docker'
-  args: 
-  - build
-  - --build-arg
-  - SECRET_KEY=$SECRET_KEY
-  - -t=gcr.io/dtu-mlops-338110/testing
-  - .
+  args: ["build", "-t", "-t=gcr.io/dtu-mlops-338110/testing","--build-arg", "SECRET_KEY=$$SECRET_KEY", "."]
   secretEnv: 'SECRET_KEY=$SECRET_KEY'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/dtu-mlops-338110/testing']
