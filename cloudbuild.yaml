@@ -8,7 +8,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
       - 'build'
-      - '-tag=gcr.io/dtu-mlops-338110/testing'
+      - '--tag=gcr.io/dtu-mlops-338110/testing'
       - '--build-arg SECRET_KEY=$$SECRET_KEY'
       - '.'
   secretEnv: ['SECRET_KEY']
