@@ -48,9 +48,9 @@ COPY models/ root/gnn-mol/models/
 COPY reports/ root/gnn-mol/reports/
 COPY tests/ root/gnn-mol/tests/
 COPY entrypoint.sh root/gnn-mol/entrypoint.sh
-COPY .dvc/ /root/project/.dvc/
-COPY data.dvc /root/project/data.dvc
-COPY .git/ /root/project/.git/
+COPY .dvc/ /root/gnn-mol/.dvc/
+COPY data.dvc /root/gnn-mol/data.dvc
+COPY .git/ /root/gnn-mol/.git/
 WORKDIR /root/gnn-mol/
 #ENTRYPOINT ["python", "-u","src/data/make_dataset.py"]
 ENTRYPOINT ["sh", "entrypoint.sh"]
