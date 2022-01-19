@@ -9,7 +9,7 @@ steps:
   entrypoint: 'bash'
   args: 
       - -c
-      - echo "Secret is $$SECRET_KEY"
+      - echo "Secret is ${_IMAGE_NAME}"
 substitutions:
     _IMAGE_NAME: v6.9.1
 # - name: 'gcr.io/cloud-builders/docker'
