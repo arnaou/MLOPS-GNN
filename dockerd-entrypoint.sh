@@ -3,8 +3,8 @@ set -e
 
 if [[ "$1" = "serve" ]]; then
     shift 1
-    echo "RUNNING TORCHSERVE"
-    torchserve --start --ts-config /home/model-server/config.properties --model-store=model-store --models=mol_gnn.mar
+    echo "RUNNING TORCHSERVE in"
+    torchserve --start --ts-config config.properties --model-store model-store --models gnn_mol=gnn_mol.mar
 else
     eval "$@"
 fi

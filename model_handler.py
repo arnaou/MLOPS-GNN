@@ -1,6 +1,5 @@
 from ts.torch_handler.base_handler import BaseHandler
 import logging
-import os
 import torch
 import yaml
 
@@ -22,8 +21,8 @@ class ModelHandler(BaseHandler):
         self.model = None
 
     def load_model(self):
-        model_path = "models/checkpoint.pt"
-        model_config_path = "models/model_config.yml"
+        model_path = "../../../models/checkpoint.pt"
+        model_config_path = "../../../models/model_config.yml"
         with open(model_config_path) as file:
             model_config = yaml.load(file, Loader=yaml.FullLoader)
         in_channels = model_config['in_channels']['value']
@@ -37,11 +36,15 @@ class ModelHandler(BaseHandler):
         model = GNNModel(in_channels=in_channels, hidden_channels=hidden_channels,
                          out_channels=out_channels, edge_dim=edge_dim, num_layers=num_layers,
                          num_timesteps=num_timesteps, dropout=dropout).model()
+        
         model.load_state_dict(torch.load(model_path))
-        self.model = model.eval()
+            
+        model.eval()
+        self.model = model
         logger.debug(f"Loaded model: {model}")
+        
 
-    def initialize(self):
+    def initialize(self, context=None):
         """
         Initialize model. This will be called during model loading time
         :param context: Initial context contains model server system properties.
@@ -58,8 +61,13 @@ class ModelHandler(BaseHandler):
         :return: list of preprocessed model input data
         """
         # Take the input data (smiles string) and make it inference ready
-        preprocessed_data = process_smiles(data['data'])
+        print("####################################################")
+        print(data)
+        print(type(data))
+        print(data[0]['data'])
+        preprocessed_data = process_smiles(data[0]['data'])
         preprocessed_data.batch = torch.tensor([0])
+        print(preprocessed_data)
         return preprocessed_data
 
     def inference(self, data):
@@ -69,10 +77,11 @@ class ModelHandler(BaseHandler):
         :return: list of inference output in NDArray
         """
         # Do some inference call to engine here and return output
-        model_output = self.model(data.x, data.edge_index, data.edge_attr, data.batch)
+        with torch.no_grad():
+            model_output = self.model(data.x, data.edge_index, data.edge_attr, data.batch)
         return model_output.item()
 
-    def handle(self, data):
+    def handle(self, data, context=None):
         """
         Invoke by TorchServe for prediction request.
         Do pre-processing of data, prediction using model and postprocessing of prediciton output
@@ -80,6 +89,7 @@ class ModelHandler(BaseHandler):
         :param context: Initial context contains model server system properties.
         :return: prediction output
         """
+        self.context = context
         self.initialize()
         model_input = self.preprocess(data)
         return self.inference(model_input)
