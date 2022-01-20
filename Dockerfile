@@ -79,15 +79,15 @@ RUN torch-model-archiver \
   --handler=/home/model-server/model_handler.py \
   --export-path=/home/model-server/model-store
 
-RUN mv mol_gnn.mar home/model-server/model-store
 WORKDIR /root/gnn-mol/
 RUN dvc pull
 
 CMD ["torchserve", \
      "--start", \
+     "--ncs"\
      "--ts-config=/home/model-server/config.properties", \
      "--model-store=home/model-server/model-store" \
-     "--models=mol_gnn=mol_gnn.mar" ]
+     "--models=mol_gnn.mar" ]
 
 
 #WORKDIR /root/gnn-mol/
