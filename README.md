@@ -67,6 +67,46 @@ Upload to Dockerhub: `docker container commit CONTAINER-ID gnn-mol-latest` (Get 
 
 To Pull: `docker pull 123456789523544/gnn-mol-latest`
 
+# Deployment
+
+Build from Dockerfile: `docker build -f docker/Dockerfile --tag=europe-west1-docker.pkg.dev/dtu-mlops-338110/gnn-mol/serve-gnn .`
+
+Run locally: `docker run --rm -it -p 8080:8080 -p 8081:8081 --name=local-gnn europe-west1-docker.pkg.dev/dtu-mlops-338110/gnn-mol/serve-gnn`
+
+Test locally: `cat > instances.json <<END
+{
+  "instances": [
+    {
+      "data": "CCCCCCCO"
+    }
+  ]
+}
+END`
+
+`curl -X POST \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -d @instances.json \
+  localhost:8080/predictions/gnn_mol`
+
+Push to GCloud Artifact Registry: `gcloud auth configure-docker europe-west1-docker.pkg.dev`
+
+`docker push europe-west1-docker.pkg.dev/dtu-mlops-338110/gnn-mol/serve-gnn`
+
+Create a model version: `gcloud beta ai-platform versions create v2 \
+  --region=europe-west1 \
+  --model=gnn_mol \
+  --machine-type=n1-standard-4 \
+  --image=europe-west1-docker.pkg.dev/dtu-mlops-338110/gnn-mol/serve-gnn \
+  --ports=8080 \
+  --health-route=/ping \
+  --predict-route=/predictions/gnn_mol`
+
+Test Deployment: ``
+
+
+
+More help: https://cloud.google.com/ai-platform/prediction/docs/getting-started-pytorch-container
+
 
 # Usage
 

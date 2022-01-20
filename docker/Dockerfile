@@ -47,21 +47,21 @@ RUN echo '[GoogleCompute]\nservice_account = default' > /etc/boto.cfg
 #Entrypoint
 
 COPY src/ home/model-server/src/
-COPY models/ home/model-server/models/
 COPY reports/ home/model-server/reports/
 COPY data/ home/model-server/data/
 COPY tests/ home/model-server/tests/
 COPY .dvc/ home/model-server/.dvc/
 COPY .git/ home/model-server/.git
 COPY data.dvc home/model-server/data.dvc
+COPY models.dvc home/model-server/models.dvc
 
 ENV PYTHONPATH "${PYTHONPATH}:/home/model-server/"
 WORKDIR /home/model-server/
 RUN dvc pull
 
 #COPY entrypoint.sh root/gnn-mol/entrypoint.sh
-COPY src/models/model.py model_handler.py models/checkpoint.pt /home/model-server/
-COPY dockerd-entrypoint.sh /usr/local/bin/dockerd-entrypoint.sh
+COPY src/models/model.py docker/model_handler.py models/checkpoint.pt /home/model-server/
+COPY docker/dockerd-entrypoint.sh /usr/local/bin/dockerd-entrypoint.sh
 
 USER root
 RUN printf "\nservice_envelope=json" >> /home/model-server/config.properties
@@ -96,13 +96,6 @@ ENV TEMP=/home/model-server/tmp
 ENTRYPOINT ["/usr/local/bin/dockerd-entrypoint.sh"]
 CMD ["serve"]
 
-
-#CMD ["torchserve", \
-#     "--start", \
-#     "--ncs"\
-#     "--ts-config=/home/model-server/config.properties", \
-#     "--model-store=home/model-server/model-store" \
-#     "--models=mol_gnn.mar" ]
 
 
 

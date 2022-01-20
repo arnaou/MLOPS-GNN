@@ -21,6 +21,8 @@ class ModelHandler(BaseHandler):
         self.model = None
 
     def load_model(self):
+        
+        
         model_path = "../../../models/checkpoint.pt"
         model_config_path = "../../../models/model_config.yml"
         with open(model_config_path) as file:
@@ -61,13 +63,8 @@ class ModelHandler(BaseHandler):
         :return: list of preprocessed model input data
         """
         # Take the input data (smiles string) and make it inference ready
-        print("####################################################")
-        print(data)
-        print(type(data))
-        print(data[0]['data'])
         preprocessed_data = process_smiles(data[0]['data'])
-        preprocessed_data.batch = torch.tensor([0])
-        print(preprocessed_data)
+        preprocessed_data.batch = torch.tensor([1])
         return preprocessed_data
 
     def inference(self, data):
@@ -79,7 +76,7 @@ class ModelHandler(BaseHandler):
         # Do some inference call to engine here and return output
         with torch.no_grad():
             model_output = self.model(data.x, data.edge_index, data.edge_attr, data.batch)
-        return model_output.item()
+        return model_output[1].tolist()
 
     def handle(self, data, context=None):
         """
