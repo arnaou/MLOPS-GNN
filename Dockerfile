@@ -61,12 +61,7 @@ COPY data.dvc root/gnn-mol/data.dvc
 COPY entrypoint.sh root/gnn-mol/entrypoint.sh
 COPY src/models/model.py model_handler.py models/checkpoint.pth /home/model-server/
 
-#WORKDIR /
-#COPY --from=conda_setup root/gnn-mol/ /home/gnn-mol/
-#COPY --from=conda_setup /usr/bin/conda_setup /usr/bin/conda_setup 
-#WORKDIR /home/model-server/
-
-#USER root
+USER root
 RUN printf "\nservice_envelope=json" >> /home/model-server/config.properties
 #USER model-server
 RUN mkdir home/model-server/model-store
