@@ -1,4 +1,3 @@
-
 import argparse
 import logging
 from math import sqrt
@@ -73,8 +72,7 @@ def train_loop():
                 )
                 prof.step()
 
-            torch.save(model.state_dict(), checkpoint)
-
+            torch.save(model.state_dict(), "models/checkpoint.pt")
 
 
 if __name__ == "__main__":
@@ -85,6 +83,7 @@ if __name__ == "__main__":
 
     config_path = "src/configs/" + str(args.config)
     import shutil
+
     shutil.copyfile(config_path, "models/model_config.yml")
     wandb.init(project="MLOPS-GNN", config=config_path)
     config = wandb.config
@@ -111,8 +110,6 @@ if __name__ == "__main__":
     log.info("Training day and night")
     train_loader = torch.load(trainpath)
     val_loader = torch.load(valpath)
-
-
 
     train_loop()
 
