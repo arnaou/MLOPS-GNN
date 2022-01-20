@@ -1,7 +1,7 @@
 #config.yaml
 epochs:
   desc: Number of epochs to train over
-  value: 5
+  value: 100
 batch_size:
   desc: Size of each mini-batch
   value: 32
@@ -20,6 +20,9 @@ testpath:
 valpath:
   desc: Path of validation set
   value: "data/esol/processed/val_loader.pt"
+visualize_path:
+  desc: path to save visualization
+  value: "reports/figures/parity_plot.png"
 checkpoint:
   desc: Path to save model checkpoint
   value: "models/checkpoint.pth"
@@ -37,10 +40,10 @@ edge_dim:
   value: 10
 num_layers:
   desc: "Number of GNN layers."
-  value: 6
+  value: 3
 num_timesteps:
   desc: "Number of iterative refinement steps for global readout"
   value: 2
 dropout:
   desc: "Dropout probability"
-  value: 0.1
+  value: 0.2

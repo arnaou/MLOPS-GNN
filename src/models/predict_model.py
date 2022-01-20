@@ -3,12 +3,8 @@ import logging
 
 import torch
 import torch.nn.functional as F
-from torch.profiler import (
-    ProfilerActivity,
-    profile,
-    record_function,
-    tensorboard_trace_handler,
-)
+from torch.profiler import (ProfilerActivity, profile, record_function,
+                            tensorboard_trace_handler)
 
 import wandb
 from src.models.model import GNNModel
@@ -27,33 +23,39 @@ def predict(data):
     return float(mse.mean().sqrt())
 
 
+def get_predicts(data):
+    data = data.to(device)
+    preds = model(data.x, data.edge_index, data.edge_attr, data.batch)
+    targets = data.y
+    return targets, preds
+
+
 def predict_loop():
     with profile(
-        schedule=torch.profiler.schedule(
-            wait=5,  # during this phase profiler is not active
-            warmup=2,  # during this phase profiler starts tracing, but the results are discarded
-            active=6,  # during this phase profiler traces and records data
-            repeat=2,
-        ),
-        activities=[ProfilerActivity.CPU],
-        record_shapes=True,
-        on_trace_ready=tensorboard_trace_handler("./log/predict/"),
+            schedule=torch.profiler.schedule(
+                wait=5,  # during this phase profiler is not active
+                warmup=2,  # during this phase profiler starts tracing, but the results are discarded
+                active=6,  # during this phase profiler traces and records data
+                repeat=2,
+            ),
+            activities=[ProfilerActivity.CPU],
+            record_shapes=True,
+            on_trace_ready=tensorboard_trace_handler("./log/predict/"),
     ) as prof:
         with record_function("model_inference"):
-
             model.load_state_dict(torch.load(checkpoint))
 
             for data_idx, data in enumerate(test_loader):
                 test_rmse = predict(data)
 
                 wandb.log({"test_rmse": test_rmse})
-                print(f"Data-set: {data_idx+1}", f"Test Error: {test_rmse:.4f}")
+                print(f"Data-set: {data_idx + 1}", f"Test Error: {test_rmse:.4f}")
                 prof.step()
 
             with profile(
-                activities=[ProfilerActivity.CPU],
-                record_shapes=True,
-                on_trace_ready=tensorboard_trace_handler("./log"),
+                    activities=[ProfilerActivity.CPU],
+                    record_shapes=True,
+                    on_trace_ready=tensorboard_trace_handler("./log"),
             ) as prof:
                 with record_function("model_inference"):
                     model(data.x, data.edge_index, data.edge_attr, data.batch)

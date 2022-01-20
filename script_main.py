@@ -3,10 +3,10 @@ from math import sqrt
 import torch
 import torch.nn.functional as F
 from torch_geometric.datasets import MoleculeNet
+from torch_geometric.loader import DataLoader
 from torch_geometric.nn.models import AttentiveFP
 
 from src.features.build_features import Gen_Afp_Features
-from torch_geometric.loader import DataLoader
 
 # loading, and construction of featurized graphs
 property_tag = "ESOL"  # define the dataset

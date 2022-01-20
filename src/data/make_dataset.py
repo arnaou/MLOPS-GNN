@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
+import argparse
 import logging
 import os
+import pdb
 from pathlib import Path
 
 import torch
 from dotenv import find_dotenv, load_dotenv
 from torch_geometric.datasets import MoleculeNet
 from torch_geometric.loader import DataLoader
-import pdb
-import argparse
 
 parser = argparse.ArgumentParser(description='data loading and pre-processing')
 parser.add_argument('--property_name', type=str, default="esol")

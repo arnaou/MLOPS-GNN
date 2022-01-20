@@ -1,11 +1,12 @@
-from ts.torch_handler.base_handler import BaseHandler
 import logging
 import os
+
 import torch
 import yaml
+from ts.torch_handler.base_handler import BaseHandler
 
-from src.models.model import GNNModel
 from src.features.build_features import process_smiles
+from src.models.model import GNNModel
 
 logger = logging.getLogger(__name__)
 

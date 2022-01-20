@@ -1,19 +1,15 @@
 import argparse
 import logging
+import pdb
 from math import sqrt
-
+import shutil
 import torch
 import torch.nn.functional as F
-from torch.profiler import (
-    ProfilerActivity,
-    profile,
-    record_function,
-    tensorboard_trace_handler,
-)
-
+from torch.profiler import (ProfilerActivity, profile, record_function,
+                            tensorboard_trace_handler)
+import os
 import wandb
 from src.models.model import GNNModel
-import pdb
 
 log = logging.getLogger(__name__)
 print('before model definition')
@@ -34,6 +30,7 @@ def train(train_loader, model):
         optimizer.step()
         total_loss += float(loss) * data.num_graphs
         total_examples += data.num_graphs
+
     return sqrt(total_loss / total_examples)
 
 
@@ -82,7 +79,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     config_path = "src/configs/" + str(args.config)
-    import shutil
+
+    # if not os.path.exists('models'):
+    #     os.makedirs('models')
 
     shutil.copyfile(config_path, "models/model_config.yml")
     wandb.init(project="MLOPS-GNN", config=config_path)
