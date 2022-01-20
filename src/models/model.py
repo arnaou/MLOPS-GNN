@@ -2,6 +2,8 @@ import torch
 from torch_geometric.nn.models import AttentiveFP
 
 
+
+
 class GNNModel(torch.nn.Module):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # hyper_parameters for the afp model
