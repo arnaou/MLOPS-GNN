@@ -23,12 +23,12 @@ valpath:
 checkpoint:
   desc: Path to save model checkpoint
   value: "models/checkpoint.pth"
-in_channel:
+in_channels:
   desc: "Size of each input sample"
   value: 39
 hidden_channels:
   desc: "Hidden node feature dimensionality"
-  value: 27
+  value: 200
 out_channels:
   desc: "Size of each output sample"
   value: 1
