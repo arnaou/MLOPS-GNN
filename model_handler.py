@@ -22,7 +22,7 @@ class ModelHandler(BaseHandler):
         self.model = None
 
     def load_model(self):
-        model_path = "models/checkpoint.pth"
+        model_path = "models/checkpoint.pt"
         model_config_path = "models/model_config.yml"
         with open(model_config_path) as file:
             model_config = yaml.load(file, Loader=yaml.FullLoader)
@@ -38,7 +38,7 @@ class ModelHandler(BaseHandler):
                          out_channels=out_channels, edge_dim=edge_dim, num_layers=num_layers,
                          num_timesteps=num_timesteps, dropout=dropout).model()
         model.load_state_dict(torch.load(model_path))
-        self.model = model
+        self.model = model.eval()
         logger.debug(f"Loaded model: {model}")
 
     def initialize(self):
