@@ -5,6 +5,9 @@ apt install --no-install-recommends -y build-essential gcc && \
 apt clean \ 
 wget \
 && rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+    && apt-get install -y software-properties-common
+RUN apt install --no-install-recommends -y openjdk-11-jre-headless
 
 RUN mkdir /root/gnn-mol
 COPY requirements.txt requirements.txt
@@ -84,7 +87,7 @@ CMD ["torchserve", \
      "--start", \
      "--ts-config=/home/model-server/config.properties", \
      "--model-store=home/model-server/model-store" \
-     "--models=mol_gnn=mol_gnn.mar"]
+     "--models=mol_gnn=mol_gnn.mar" ]
 
 
 #WORKDIR /root/gnn-mol/
