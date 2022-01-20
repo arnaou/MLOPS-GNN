@@ -11,15 +11,17 @@ COPY requirements.txt requirements.txt
 COPY requirements_test.txt requirements_test.txt
 COPY setup.py setup.py
 
+
 RUN conda init
 RUN conda install pytorch=1.10.1 cpuonly -c pytorch
 RUN conda install pyg=2.0.3 -c pyg -c conda-forge --yes
 RUN conda install -c conda-forge rdkit=2020.09.1.0 --yes
 RUN conda install torchserve torch-model-archiver torch-workflow-archiver -c pytorch
 
+RUN pip install torchserve torch-model-archiver torch-workflow-archiver
 RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install -r requirements_test.txt --no-cache-dir
-#RUN pip install python-dotenv[cli]
+RUN pip install python-dotenv[cli]
 
 RUN wget -nv \
     https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz && \
@@ -46,20 +48,24 @@ COPY models/ root/gnn-mol/models/
 COPY reports/ root/gnn-mol/reports/
 COPY data/ root/gnn-mol/data/
 COPY tests/ root/gnn-mol/tests/
+COPY .dvc/ root/gnn-mol/.dvc/
+COPY .git/ root/gnn-mol/.git
 
 
-FROM pytorch/torchserve:0.3.0-cpu AS serve_deploy
+#FROM pytorch/torchserve:0.3.0-cpu AS serve_deploy
 
-COPY entrypoint.sh entrypoint.sh
+COPY entrypoint.sh root/gnn-mol/entrypoint.sh
 COPY src/models/model.py model_handler.py models/checkpoint.pth /home/model-server/
-WORKDIR /
-COPY --from=conda_setup root/gnn-mol/ /home/gnn-mol/
-COPY --from=conda_setup /usr/bin/conda_setup /usr/bin/conda_setup 
-WORKDIR /home/model-server/
 
-USER root
+#WORKDIR /
+#COPY --from=conda_setup root/gnn-mol/ /home/gnn-mol/
+#COPY --from=conda_setup /usr/bin/conda_setup /usr/bin/conda_setup 
+#WORKDIR /home/model-server/
+
+#USER root
 RUN printf "\nservice_envelope=json" >> /home/model-server/config.properties
-USER model-server
+#USER model-server
+RUN mkdir home/model-server/model-store
 
 RUN torch-model-archiver \
   --model-name=gnn-mol \
@@ -69,13 +75,14 @@ RUN torch-model-archiver \
   --handler=/home/model-server/model_handler.py \
   --export-path=/home/model-server/model-store
 
-CMD ["sh", "entrypoint.sh" && \
-    "torchserve", \
+WORKDIR /root/gnn-mol/
+RUN dvc pull
+
+CMD ["torchserve", \
      "--start", \
      "--ts-config=/home/model-server/config.properties", \
      "--models", \
      "gnn-mol=gnn-mol.mar"]
-
 
 
 #WORKDIR /root/gnn-mol/

@@ -46,10 +46,6 @@ class ModelHandler(BaseHandler):
         :param batch: list of raw requests, should match batch size
         :return: list of preprocessed model input data
         """
-        # Take the input data and make it inference ready
-        preprocessed_data = data[0].get("data")
-        if preprocessed_data is None:
-            preprocessed_data = data[0].get("body")
 
         return preprocessed_data
 

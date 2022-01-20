@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "I am in the entrypppppoint"
-wandb login $YOUR_API_KEY
-echo "Pulling data"
+#echo "I am in the entrypppppoint"
+#wandb login $YOUR_API_KEY
+echo "Pulling data from DVC"
 dvc pull
