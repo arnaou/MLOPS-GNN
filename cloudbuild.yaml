@@ -11,11 +11,11 @@ steps:
   secretEnv: ['SECRET_KEY']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/dtu-mlops-338110/testing']
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ["-c","docker run gcr.io/dtu-mlops-338110/testing:latest"]
 availableSecrets:
   secretManager:
   - versionName: projects/310452010967/secrets/SECRET_KEY/versions/latest
     env: 'SECRET_KEY'
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  args: ["-c","docker run gcr.io/dtu-mlops-338110/testing:latest"]
 timeout: 1200s
