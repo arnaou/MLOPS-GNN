@@ -1,8 +1,12 @@
 #!/bin/sh
-echo 'wandb'
+echo 'login to wandb'
 wandb login $SECRET_KEY
-echo 'dvc pull'
+echo 'initate dvc pull'
 dvc pull
-echo 'dvc pull done'
+echo 'dvc pull complete'
+#python -u src/data/make_dataset.py
+echo 'make dataset complete'
 python -u src/models/train_model.py
-echo 'training done'
+echo 'training complete'
+python -u src/models/predict_model.py
+echo 'predict complete'
