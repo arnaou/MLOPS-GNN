@@ -50,6 +50,7 @@ COPY data/ root/gnn-mol/data/
 COPY tests/ root/gnn-mol/tests/
 COPY .dvc/ root/gnn-mol/.dvc/
 COPY .git/ root/gnn-mol/.git
+COPY data.dvc root/gnn-mol/data.dvc
 
 
 #FROM pytorch/torchserve:0.3.0-cpu AS serve_deploy
@@ -68,21 +69,22 @@ RUN printf "\nservice_envelope=json" >> /home/model-server/config.properties
 RUN mkdir home/model-server/model-store
 
 RUN torch-model-archiver \
-  --model-name=gnn-mol \
+  --model-name=mol_gnn \
   --version=1.0 \
   --model-file=/home/model-server/model.py \
   --serialized-file=/home/model-server/checkpoint.pth \
   --handler=/home/model-server/model_handler.py \
   --export-path=/home/model-server/model-store
 
+RUN mv mol_gnn.mar home/model-server/model-store
 WORKDIR /root/gnn-mol/
 RUN dvc pull
 
 CMD ["torchserve", \
      "--start", \
      "--ts-config=/home/model-server/config.properties", \
-     "--models", \
-     "gnn-mol=gnn-mol.mar"]
+     "--model-store=home/model-server/model-store" \
+     "--models=mol_gnn=mol_gnn.mar"]
 
 
 #WORKDIR /root/gnn-mol/
