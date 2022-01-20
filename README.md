@@ -101,7 +101,11 @@ Create a model version: `gcloud beta ai-platform versions create v2 \
   --health-route=/ping \
   --predict-route=/predictions/gnn_mol`
 
-Test Deployment: ``
+Test Deployment: `curl -X POST \
+  -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -d @instances.json \
+  https://europe-west1-ml.googleapis.com/v1/projects/dtu-mlops-338110/models/gnn_mol/versions/v4:predict`
 
 
 
