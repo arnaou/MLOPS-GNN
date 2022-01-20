@@ -1,4 +1,3 @@
-# imports just wrote this for frun
 from math import sqrt
 
 import torch

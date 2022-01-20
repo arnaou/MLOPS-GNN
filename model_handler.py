@@ -1,6 +1,8 @@
 from ts.torch_handler.base_handler import BaseHandler
 import logging
+import os
 import torch
+import yaml
 
 from src.models.model import GNNModel
 from src.features.build_features import process_smiles
@@ -20,10 +22,23 @@ class ModelHandler(BaseHandler):
         self.model = None
 
     def load_model(self):
-        model_path = "models/checkpoint.pth"
-        model = GNNModel.model
+        model_path = "models/checkpoint.pt"
+        model_config_path = "models/model_config.yml"
+        with open(model_config_path) as file:
+            model_config = yaml.load(file, Loader=yaml.FullLoader)
+        in_channels = model_config['in_channels']['value']
+        hidden_channels = model_config['hidden_channels']['value']
+        out_channels = model_config['out_channels']['value']
+        edge_dim = model_config['edge_dim']['value']
+        num_layers = model_config['num_layers']['value']
+        num_timesteps = model_config['num_timesteps']['value']
+        dropout = model_config['dropout']['value']
+
+        model = GNNModel(in_channels=in_channels, hidden_channels=hidden_channels,
+                         out_channels=out_channels, edge_dim=edge_dim, num_layers=num_layers,
+                         num_timesteps=num_timesteps, dropout=dropout).model()
         model.load_state_dict(torch.load(model_path))
-        self.model = model
+        self.model = model.eval()
         logger.debug(f"Loaded model: {model}")
 
     def initialize(self):
@@ -68,7 +83,6 @@ class ModelHandler(BaseHandler):
         self.initialize()
         model_input = self.preprocess(data)
         return self.inference(model_input)
-
 
 
 if __name__ == "__main__":

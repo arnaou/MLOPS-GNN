@@ -165,7 +165,7 @@ def process_my_smiles(smiles):
         ],
         'is_conjugated': [False, True],
     }
-    pdb.set_trace()
+    #pdb.set_trace()
     mol = Chem.MolFromSmiles(smiles)
     assert mol != None, "the smiles provided could not be parsed bt RDKit"
     # node featurization
@@ -269,7 +269,7 @@ def process_smiles(smiles):
         'is_conjugated': [False, True],
     }
 
-    pdb.set_trace()
+    #pdb.set_trace()
     mol = Chem.MolFromSmiles(smiles)
     assert mol != None, "the smiles provided could not be parsed bt RDKit"
     # node featurization
