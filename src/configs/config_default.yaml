@@ -44,4 +44,3 @@ num_timesteps:
 dropout:
   desc: "Dropout probability"
   value: 0.1
-
